@@ -19,13 +19,13 @@ import { AdminModule } from './admin/admin.module'; // <-- add this
         host: configService.get('DB_HOST'),
         port: +configService.get('DB_PORT'),
         username: configService.get('DB_USER'),
-        password: configService.get('DB_PASS'),
-        database: configService.get('DB_NAME'),
+      password: configService.get('DB_PASSWORD'),
+database: configService.get('DB_DATABASE'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
         synchronize: true, // auto-create tables (dev only)
         extra: {
           ssl: {
-            rejectUnauthorized: true, // required for CockroachDB
+            rejectUnauthorized: false, // required for CockroachDB
           },
         },
       }),
