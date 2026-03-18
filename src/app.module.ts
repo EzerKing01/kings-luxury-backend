@@ -8,7 +8,6 @@ import { BookingsModule } from './bookings/bookings.module';
 import { RestaurantModule } from './restaurant/restaurant.module';
 import { AdminModule } from './admin/admin.module'; // <-- add this
 
-
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -16,14 +15,19 @@ import { AdminModule } from './admin/admin.module'; // <-- add this
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
-        type: 'mysql',
+        type: 'postgres', // changed from 'mysql'
         host: configService.get('DB_HOST'),
         port: +configService.get('DB_PORT'),
-        username: configService.get('DB_USERNAME'),
-        password: configService.get('DB_PASSWORD'),
-        database: configService.get('DB_DATABASE'),
+        username: configService.get('DB_USER'),
+        password: configService.get('DB_PASS'),
+        database: configService.get('DB_NAME'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
         synchronize: true, // auto-create tables (dev only)
+        extra: {
+          ssl: {
+            rejectUnauthorized: true, // required for CockroachDB
+          },
+        },
       }),
     }),
     AuthModule,
