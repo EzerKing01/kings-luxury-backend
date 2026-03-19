@@ -22,7 +22,7 @@ import { AdminModule } from './admin/admin.module'; // <-- add this
       password: configService.get('DB_PASSWORD'),
 database: configService.get('DB_DATABASE'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        synchronize: false, // auto-create tables (dev only)
+        synchronize: true, // auto-create tables (dev only)
         extra: {
           ssl: {
             rejectUnauthorized: false, // required for CockroachDB
